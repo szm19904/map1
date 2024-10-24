@@ -1,24 +1,29 @@
 import React from 'react';
-import { ListGroup } from 'react-bootstrap';
+import { ListGroup } from 'react-bootstrap'; 
 
-const Sidebar = () => {
-  const alertClicked = () => {
-    alert('You clicked the third ListGroupItem');
-  };
+const Sidebar = ({ selectedNode }) => {
+  if (!selectedNode) {
+    return <p><i>Select a node to see details</i></p>;  
+  }
+
+  const { label, citation, children } = selectedNode; 
 
   return (
-    <ListGroup defaultActiveKey="#link1">
-      <ListGroup.Item action href="#link1">
-        Link 1
-      </ListGroup.Item>
-      <ListGroup.Item action href="#link2" disabled>
-        Link 2
-      </ListGroup.Item>
-      <ListGroup.Item action onClick={alertClicked}>
-        This one is a button
-      </ListGroup.Item>
-    </ListGroup>
+    <div>
+      <h3><b>{label}</b></h3>
+      <p>{citation}</p>
+      <h4><b>Next Options:</b></h4>
+      <ListGroup>
+        {children && children.length > 0 ? (
+          children.map((child) => (
+            <ListGroup.Item key={child.id}>{child.label}</ListGroup.Item>
+          ))
+        ) : (
+          <ListGroup.Item>No further options</ListGroup.Item>
+        )}
+      </ListGroup>
+    </div>
   );
-}
+};
 
 export default Sidebar;

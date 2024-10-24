@@ -59,7 +59,7 @@ const MindMap = () => {
     <Container>
       <Navigation />
       <Container>
-        <Row>
+        {/*<Row>
           <Col md={9}>
             {/* <h1
               style={{ cursor: 'pointer' }}
@@ -85,11 +85,11 @@ const MindMap = () => {
               </div>
             )} */}
             <Hierarchy />
-            </Col>
-            <Col md={3}>
+            {/*</Col>*/}
+            
               <Sidebar />
-            </Col>
-        </Row>
+            
+        {/*</Row>*/}
       </Container>
       
     </Container>

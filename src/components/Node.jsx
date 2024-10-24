@@ -1,100 +1,75 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import nodesData from '../data/nodes.json';
+import edgesData from '../data/edges.json';
+import Sidebar from './SideBar';  
 
-// Recursive component to render a node and its children
-const Node = ({ nodeData, onAddChild, onRemoveNode }) => {
-  const [showChildren, setShowChildren] = useState(false); // State to control visibility of children
+const buildTree = (nodes, edges) => {
+  const nodesDict = nodes.reduce((acc, node) => {
+    acc[node.id] = { ...node, children: [] };
+    return acc;
+  }, {});
+
+  edges.forEach((edge) => {
+    if (nodesDict[edge.from] && nodesDict[edge.to]) {
+      nodesDict[edge.from].children.push(nodesDict[edge.to]);
+    }
+  });
+
+  return nodesDict[1]; 
+};
+
+const Node = ({ nodeData, onSelect }) => {
+  const [showChildren, setShowChildren] = useState(false);
 
   return (
-    <div style={{ marginLeft: "20px", border: "1px solid black", padding: "10px" }}>
-      <p>{nodeData.name}</p>
-      <button
+    <div style={{ marginLeft: "20px", border: "1px solid black", padding: "10px", backgroundColor: "lightgray", marginTop: "10px", width: "750px", boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.5)" }}>
+      <p  
         onClick={() => {
-          onAddChild(nodeData.id);
-          setShowChildren(true); // Show children when the button is clicked
-        }}
+          console.log(nodeData.label);
+          onSelect(nodeData);  
+        }}  
+        className="node-label"
       >
-        Add Children
-      </button>
-      {nodeData.parentId !== null && (
-        <button onClick={() => onRemoveNode(nodeData.id)} style={{ paddingLeft: '10px' }}>  Remove</button>
+        {nodeData.label}
+      </p>
+
+      {nodeData.children && nodeData.children.length > 0 && (
+        <button onClick={() => setShowChildren(!showChildren)}>
+          {showChildren ? "Hide Children" : "Show Children"}
+        </button>
       )}
-      <div>
-        {showChildren &&
-          nodeData.children.map((child) => (
-            <Node
-              key={child.id}
-              nodeData={child}
-              onAddChild={onAddChild}
-              onRemoveNode={onRemoveNode}
-            />
+      {showChildren && (
+        <div>
+          {nodeData.children.map((child) => (
+            <Node key={child.id} nodeData={child} onSelect={onSelect} />
           ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
 
 const Hierarchy = () => {
-  // Initial data for hierarchy
-  const initialData = {
-    id: 1,
-    name: "Root",
-    parentId: null,
-    children: []
-  };
+  const [treeData, setTreeData] = useState(null);
+  const [selectedNode, setSelectedNode] = useState(null);
 
-  // State to manage the hierarchy
-  const [treeData, setTreeData] = useState(initialData);
-
-  // Function to handle adding two new children to a node
-  const handleAddChild = (parentId) => {
-    const newChildren = [
-      {
-        id: Math.random(),
-        name: `Node ${Math.floor(Math.random() * 1000)}`,
-        parentId: parentId,
-        children: []
-      },
-      {
-        id: Math.random(),
-        name: `Node ${Math.floor(Math.random() * 1000)}`,
-        parentId: parentId,
-        children: []
-      }
-    ];
-
-    const addNewChildren = (node) => {
-      if (node.id === parentId) {
-        return {
-          ...node,
-          children: [...node.children, ...newChildren], // Create new children array
-        };
-      }
-      return {
-        ...node,
-        children: node.children.map((child) => addNewChildren(child)), // Recursively map over children
-      };
-    };
-
-    setTreeData((prevTreeData) => addNewChildren(prevTreeData));
-  };
-
-  // Function to handle removing a node
-  const handleRemoveNode = (id) => {
-    const removeNodeById = (node, idToRemove) => {
-      return {
-        ...node,
-        children: node.children
-          .filter((child) => child.id !== idToRemove) // Remove child by ID
-          .map((child) => removeNodeById(child, idToRemove)), // Recursively map over children
-      };
-    };
-
-    setTreeData((prevTreeData) => removeNodeById(prevTreeData, id));
-  };
+  useEffect(() => {
+    const tree = buildTree(nodesData, edgesData);
+    setTreeData(tree);
+  }, []);
 
   return (
-    <div>
-      <Node nodeData={treeData} onAddChild={handleAddChild} onRemoveNode={handleRemoveNode} />
+    <div style={{ display: "flex" }}>
+      <div style={{ flex: 1 }}>
+        {treeData ? (
+          <Node nodeData={treeData} onSelect={setSelectedNode} />
+        ) : (
+          <p>Loading tree data...</p>
+        )}
+      </div>
+      <div style={{ width: "250px", marginLeft: "20px" }}>
+        <Sidebar selectedNode={selectedNode} /> 
+      </div>
     </div>
   );
 };

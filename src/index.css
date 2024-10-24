@@ -95,7 +95,7 @@ div > .cell {
     /* left: 0; */
     top: 0;
     height: 100%; 
-    width: 250px; 
+    width: 500px; 
     background-color: #f8f9fa;
     padding: 10px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
@@ -106,3 +106,32 @@ div > .cell {
     margin-left: 260px;
 }
   
+button:hover {
+    background-color: #101214;  /* Darker background on hover */
+    color: white;  /* Change text color to white on hover */
+}
+
+button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: #5d6164;
+    color: white;  /* Default text color */
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;  /* Smooth transition */
+    padding-bottom: 10px;;
+}
+
+
+.node-label {
+    cursor: pointer;
+    color: black; 
+    transition: background-color 0.3s;  
+}
+
+.node-label:hover {
+    background-color: blue;  
+    color: white;  
+}
