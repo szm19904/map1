@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.App {
+    padding: 20px;
+    height: 350px;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+h1 {
+    font-size: 36px;
+    text-align: center;
+    font-weight: bold;
+    padding-top:25px;
+    margin-bottom: 20px;
+    color: #333;
+    cursor: pointer;
+  }
+  h1:hover {
+    color: #125989;
+}
+
+.bg-body-tertiary {
+    box-shadow:  0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.cell {
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #aec9e0;
+    color: #333;
+    cursor: pointer;
+    text-align: center;
+    font-size: 24px; 
+    box-shadow:  0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+.cell:hover:hover{
+    background-color: #9bc0e1;
+
+
+}
+.cell.branch {
+    background-color: #dff9fb;
+}
+
+.cell.leaf {
+    background-color: #f1f2f6;
+}
+  
+.cell span {
+    font-style: italic;
+    color: #7f8c8d;
+    margin-left: 10px;
+}
+  
+div > .cell {
+    margin-left: 20px;
+    margin-top: 20px;
+}
+  
+
+.mindmap-children {
+    margin-left: 20px;
+    border-left: 2px solid #ccc;
+    padding-left: 15px;
+}
+  
+.node-container {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    margin-top: 10px;    
+
+  }
+  
+.node {
+    margin-right: 20px;
+    display: inline;
+
+}
+
+.sidebar {
+    /* left: 0; */
+    top: 0;
+    height: 100%; 
+    width: 250px; 
+    background-color: #f8f9fa;
+    padding: 10px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    right:0;    
+  }
+  
+  .container {
+    margin-left: 260px;
+}
+  
