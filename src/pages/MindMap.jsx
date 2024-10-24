@@ -3,7 +3,7 @@ import nodesData from '../data/nodes.json';
 import edgesData from '../data/edges.json';
 import { Container, Row, Col } from 'react-bootstrap';
 import Navigation from '../components/Navigation';
-import Sidebar from '../components/Sidebar';
+import Sidebar from '../components/SideBar';
 import Hierarchy from '../components/Node';
 
 import '../index.css';

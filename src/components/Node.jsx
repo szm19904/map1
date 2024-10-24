@@ -16,7 +16,7 @@ const Node = ({ nodeData, onAddChild, onRemoveNode }) => {
         Add Children
       </button>
       {nodeData.parentId !== null && (
-        <button onClick={() => onRemoveNode(nodeData.id)}>Remove</button>
+        <button onClick={() => onRemoveNode(nodeData.id)} style={{ paddingLeft: '10px' }}>  Remove</button>
       )}
       <div>
         {showChildren &&
@@ -77,7 +77,7 @@ const Hierarchy = () => {
 
     setTreeData((prevTreeData) => addNewChildren(prevTreeData));
   };
-gir
+
   // Function to handle removing a node
   const handleRemoveNode = (id) => {
     const removeNodeById = (node, idToRemove) => {
@@ -94,7 +94,6 @@ gir
 
   return (
     <div>
-      <h2>Hierarchy of Nodes</h2>
       <Node nodeData={treeData} onAddChild={handleAddChild} onRemoveNode={handleRemoveNode} />
     </div>
   );
